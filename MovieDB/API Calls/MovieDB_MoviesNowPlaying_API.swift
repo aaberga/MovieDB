@@ -52,7 +52,7 @@ class MovieDB_MoviesNowPlaying_API {
         guard var URL = URL(string: commandURL) else {return}
 
         let URLParams = [
-            "api_key": "73bc7e190c9dfe6e7be35a5d11e44949",
+            "api_key": kAPI_Key,
             ]
         URL = URL.appendingQueryParameters(URLParams)
         var request = URLRequest(url: URL)

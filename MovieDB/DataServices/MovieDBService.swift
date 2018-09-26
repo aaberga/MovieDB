@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 
 private let kMovieDB_APIKey = "73bc7e190c9dfe6e7be35a5d11e44949"
@@ -65,6 +66,84 @@ class MoviedDBService: DataService {
     func getMoviesNowPlaying(withCompletion completionBlock: @escaping (_ result: Any?, _ error: Error?) -> Void) {
         
         func transformResponseToModel(_ result: Any?, _ error: Error?) -> Void {
+            
+            var nowPlayingResponse: PlayingMoviesResponse?
+            var moviesList: [Movie]?
+            
+            /*
+             
+             let movies: [Movie]
+             
+             let page: Int
+             
+             let totalPages: Int
+             let totalMovies: Int
+             */
+            
+            var apiError: NSError?
+
+            if let nowPlayingMovies = result as? JSON {
+                
+                DLogWith(message: "Now Playing: \(nowPlayingMovies)")
+                let totalResults = nowPlayingMovies["total_results"].int
+                let totalPages = nowPlayingMovies["total_pages"].int
+                let currentPage = nowPlayingMovies["page"].int
+                
+                if let totalResults = totalResults, let totalPages = totalPages, let currentPage = currentPage {
+ 
+                    if let moviesDataList = nowPlayingMovies["results"].array {
+                        
+                        var foundMoviesList: [Movie] = []
+
+                        for currentMovieData in moviesDataList {
+                            
+                            let id = currentMovieData["id"].int
+                            let title = currentMovieData["title"].string
+                            let releaseDate = currentMovieData["release_date"].string
+
+                            let overview = currentMovieData["overview"].string
+                            let originalTitle = currentMovieData["original_title"].string
+                            let originalLanguage = currentMovieData["original_language"].string
+                            
+                            let posterPath = currentMovieData["poster_path"].string
+                            
+                            if let id = id, let title = title, let releaseDate = releaseDate, let overview = overview, let originalTitle = originalTitle,
+                                let originalLanguage = originalLanguage, let posterPath = posterPath {
+                                
+                                let newMovie = Movie(id: id, title: title, releaseDate: releaseDate, overview: overview, originalTitle: originalTitle, originalLanguage: originalLanguage, posterPath: posterPath)
+                                foundMoviesList.append(newMovie)
+                            }
+                        }
+                        moviesList = foundMoviesList
+                            
+                        nowPlayingResponse = PlayingMoviesResponse(movies: moviesList!, page: currentPage, totalPages: totalPages, totalMovies: totalResults)
+                        completionBlock(nowPlayingResponse, apiError)
+                        
+                    } else {
+                        
+                        let responseError: NSError? = NSError(domain: kErrorDomain, code: 1002, userInfo: ["ErrorString": "No forecast points! \(String(describing: result))"])
+                        apiError = responseError
+                        DLogWith(message: "Error: \(apiError!)")
+                    }
+                    
+                } else {
+                    
+                    let responseError: NSError? = NSError(domain: kErrorDomain, code: 1001, userInfo: ["ErrorString": "No forecast points! \(String(describing: result))"])
+                    apiError = responseError
+                    DLogWith(message: "Error: \(apiError!)")
+                }
+            } else {
+                
+                let responseError: NSError? = NSError(domain: kErrorDomain, code: 1000, userInfo: ["ErrorString": "No forecast points! \(String(describing: result))"])
+                apiError = responseError
+                DLogWith(message: "Error: \(apiError!)")
+            }
+            
+            if let apiError = apiError {
+                
+                DLogWith(message: "Error: \(apiError)")
+                completionBlock(nil, apiError)
+            }
         }
         
         MovieDB_MoviesNowPlaying_API.sendRequest(withCompletion: transformResponseToModel)

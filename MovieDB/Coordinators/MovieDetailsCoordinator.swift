@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 
 private let kMainStoryBoard = "Main"
@@ -39,16 +40,30 @@ class MovieDetailsCoordinator: SubCoordinator, MovieDetailsDelegate {
         
         if let details = self.details {
             
+            var movieID = 0
             if let currentMovie = details["targetMovie"] as? Movie {
                 
                 self.movie = currentMovie
+                movieID = Int(currentMovie.id)
             }
             
             if let detailsViewController = self.viewController as? MovieDetailsViewController {
                 detailsViewController.delegate = self
             }
             
-            // Launch API calls!!!
+            if let targetViewController = self.viewController as? MovieDetailsViewController {
+                
+                self.dataService.getMovieDetails(forMovie: movieID, andOnCompletion: { [weak targetViewController](result: Any?, error: Error?) in
+                    
+                    DLogWith(message: "Result: \(String(describing: result))")
+                    
+                    if let json = result as? JSON {
+                        
+                        let resultString = json.description
+                        targetViewController?.displayMovieDetails(resultString)
+                    }
+                })
+            }
         }
     }
 

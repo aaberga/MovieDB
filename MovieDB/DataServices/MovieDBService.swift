@@ -175,6 +175,8 @@ class MoviedDBService: DataService {
     func getMovieDetails(forMovie movieID: Int, andOnCompletion completionBlock: @escaping (_ result: Any?, _ error: Error?) -> Void) {
         
         func transformResponseToModel(_ result: Any?, _ error: Error?) -> Void {
+            
+            completionBlock(result, error)
         }
         
         MovieDB_MovieDetailsByID_API.sendRequest(forMovie: movieID, andOnCompletion: transformResponseToModel)

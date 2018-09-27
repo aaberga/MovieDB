@@ -18,7 +18,7 @@ protocol MovieDetailsDelegate: class {
 protocol MovieDetailsDisplay: class {
     
     func displayMovieInfo(title: String, posterImage: UIImage)
-    func displayMovieDetails()
+    func displayMovieDetails(_ text: String)
     func displayCollectionMovies(from tableDelegate: UICollectionViewDelegate, with tableDataSource: UICollectionViewDataSource)
 }
 
@@ -60,14 +60,18 @@ class MovieDetailsViewController: UIViewController {
 extension MovieDetailsViewController: MovieDetailsDisplay {
     
     func displayMovieInfo(title: String, posterImage: UIImage) {
+        
         DispatchQueue.main.async {
             self.movieTitle.text = title
             self.moviePoster.image = posterImage
         }
     }
     
-    func displayMovieDetails() {
+    func displayMovieDetails(_ text: String) {
         
+        DispatchQueue.main.async {
+            self.movieDetails.text = text
+        }
     }
 
     func displayCollectionMovies(from tableDelegate: UICollectionViewDelegate, with tableDataSource: UICollectionViewDataSource) {

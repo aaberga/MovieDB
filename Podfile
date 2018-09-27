@@ -13,14 +13,14 @@ def basic_pods
 
     pod 'SwiftyJSON'
     pod 'CrossroadRegex'
-    pod 'TMDBSwift'
+    #pod 'TMDBSwift'
 end
 
 def test_pods
 
     pod 'SwiftyJSON'
     pod 'CrossroadRegex'
-    pod 'TMDBSwift'
+    #pod 'TMDBSwift'
 end
 
 # TMDBSwift Github Repo

@@ -84,7 +84,7 @@ class MoviedDBService: DataService {
 
             if let nowPlayingMovies = result as? JSON {
                 
-                DLogWith(message: "Now Playing: \(nowPlayingMovies)")
+//                DLogWith(message: "Now Playing: \(nowPlayingMovies)")
                 let totalResults = nowPlayingMovies["total_results"].int
                 let totalPages = nowPlayingMovies["total_pages"].int
                 let currentPage = nowPlayingMovies["page"].int
@@ -149,6 +149,29 @@ class MoviedDBService: DataService {
         MovieDB_MoviesNowPlaying_API.sendRequest(withCompletion: transformResponseToModel)
     }
     
+    func getMoviePoster(with imageID: String, andOnCompletion completionBlock: @escaping (_ result: Any?, _ error: Error?) -> Void) {
+        
+//        DLogWith(message: "Retrieve image: \(imageID)")
+        func transformResponseToModel(_ result: Any?, _ error: Error?) -> Void {
+
+//            DLogWith(message: "Retrieved result: \(String(describing: result))")
+            
+            if let imageData = result as? UIImage {
+                
+                let resultData: [String: Any] = ["imageID": imageID, "image": imageData]
+//                DLogWith(message: "Data: \(resultData.description)")
+                completionBlock(resultData, nil)
+                
+            } else {
+                
+                DLogWith(message: "Error: \(String(describing: error))")
+                completionBlock(nil, error)
+            }
+        }
+        
+        MovieDB_MoviePoster_API.sendRequest(withID: imageID, andOnCompletion: transformResponseToModel)
+    }
+
     func getMovieDetails(forMovie movieID: Int, andOnCompletion completionBlock: @escaping (_ result: Any?, _ error: Error?) -> Void) {
         
         func transformResponseToModel(_ result: Any?, _ error: Error?) -> Void {
@@ -156,7 +179,6 @@ class MoviedDBService: DataService {
         
         MovieDB_MovieDetailsByID_API.sendRequest(forMovie: movieID, andOnCompletion: transformResponseToModel)
     }
-    
     
     func getMoviesInCollection(withID collectionID: Int, andOnCompletion completionBlock: @escaping (_ result: Any?, _ error: Error?) -> Void) {
         

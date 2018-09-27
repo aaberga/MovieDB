@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 
 class NowPlayingCoordinator: NSObject, Coordinator {
@@ -55,6 +56,31 @@ extension NowPlayingCoordinator: NowPlayingMoviesDelegate {
             self.displayServiceOutcome(result, error)
         })
     }
+    
+    func getMoviePosters(for moviesList: [Movie]) {
+        
+//        var oneList: [Movie] = []
+//        if let firstOne = moviesList.first {
+//            oneList.append(firstOne)
+//        }
+//
+        //moviesList
+        for currentMovie in moviesList {
+            
+            let imageID = String(currentMovie.posterPath.dropFirst())
+            DispatchQueue.global(qos: .background).async {
+                self.getMoviesPoster(withImageID: imageID)
+            }
+        }
+    }
+    
+    func getMoviesPoster(withImageID imageID: String) {
+        
+        self.dataService.getMoviePoster(with: imageID, andOnCompletion: { result, error in
+            
+            self.displayMoviePoster(result, error)
+        })
+    }
 }
 
 
@@ -72,9 +98,10 @@ extension NowPlayingCoordinator {
                 self.currentError = nil
 
                 DispatchQueue.main.async {
-
                     viewController.displayMovies(from: self, with: self)
                 }
+                
+                self.getMoviePosters(for: obtainedMovies.movies)
             }
 
         } else if let error = error {
@@ -92,6 +119,43 @@ extension NowPlayingCoordinator {
             }
         }
     }
+    
+    func displayMoviePoster(_ result: Any?, _ error: Error?) -> Void {
+    
+        if let posterData = result as? [String: Any] {
+            
+//            DLogWith(message: "Data: \(posterData)")
+            let image = posterData["image"] as? UIImage
+            let imageID = posterData["imageID"] as? String
+
+            if let image = image, let imageID = imageID {
+                
+//                DLogWith(message: "imageID: \(imageID)")
+//                DLogWith(message: "imageData: \(image)")
+                
+                if let data = image.jpegData(compressionQuality: 100) {
+                    
+                    let filename = getTemporaryDirectory().appendingPathComponent(imageID)
+//                    DLogWith(message: "Temp Image file: \(filename)")
+                    try? data.write(to: filename)
+                    
+                    if let viewController = self.viewController as? MovieDBViewController {
+                        
+                        DispatchQueue.main.async {
+                            viewController.displayMovies(from: self, with: self)
+                        }
+                    }
+                }
+
+            }
+            
+        } else {
+            
+            if let error = error {
+                DLogWith(message: "Error: \(error)")
+            }
+        }
+    }
 }
 
 
@@ -105,9 +169,9 @@ extension NowPlayingCoordinator: UICollectionViewDataSource {
             
             let playingMovies = playingMovies.movies.count
             
-            return playingMovies + 1
+            return playingMovies
         }
-        return 6
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -115,7 +179,32 @@ extension NowPlayingCoordinator: UICollectionViewDataSource {
         var cell: UICollectionViewCell!
 
         cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCell", for: indexPath)
-        
+        if let titleLabel = cell.viewWithTag(101) as? UILabel,
+            let posterImageView = cell.viewWithTag(100) as? UIImageView {
+            
+            titleLabel.text = "N/A"
+            posterImageView.image = nil
+            
+//            DLogWith(message: "Index: \(indexPath.row)")
+            if let targetMovie = self.playingMovies?.movies[indexPath.row] {
+                
+                titleLabel.text = targetMovie.title
+                let imageFileName = String(targetMovie.posterPath.dropFirst())
+                let tempImagePath = getTemporaryDirectory().appendingPathComponent(imageFileName)
+                do {
+                    let imageData = try  Data(contentsOf: tempImagePath)
+                    //                DLogWith(message: "tempImage: \(tempImagePath)")
+                    if let posterImage = UIImage(data: imageData) {
+                        posterImageView.image = posterImage
+                    } else {
+                        DLogWith(message: "Could not load image \(imageFileName)")// @ \(tempImagePath)")
+                    }
+                } catch let error {
+                    
+                    DLogWith(message: "Error: \(error)")
+                }
+            }
+        }
         return cell
     }
 }
@@ -130,5 +219,16 @@ extension NowPlayingCoordinator: UICollectionViewDelegate {
      let currentCell = tableView.cellForRow(at: indexPath!)!
      print(currentCell.textLabel!.text!)
      }
-     */
+    */
+}
+
+
+private func getDocumentsDirectory() -> URL {
+    let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+    return paths[0]
+}
+
+private func getTemporaryDirectory() -> URL {
+    
+    return NSURL.fileURL(withPath: NSTemporaryDirectory(), isDirectory: true)
 }

@@ -15,7 +15,6 @@ private let kMovieDBViewController = "MovieDBViewController"
 
 class MovieDetailsCoordinator: SubCoordinator, MovieDetailsDelegate {
     
-    
     // MARK: Public Properties
     
     var presenter: Coordinator

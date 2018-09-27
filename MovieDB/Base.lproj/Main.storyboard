@@ -47,33 +47,33 @@
                                                 <imageView userInteractionEnabled="NO" tag="100" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SamplePoster" translatesAutoresizingMaskIntoConstraints="NO" id="l33-vp-AfF">
                                                     <rect key="frame" x="0.0" y="0.0" width="112.5" height="150"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3pp-Ga-bkR">
-                                                    <rect key="frame" x="2" y="75" width="108.5" height="75"/>
-                                                    <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UzX-Zv-LlD" customClass="GradientView" customModule="MovieDB" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="80" width="112.5" height="70"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="4" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3pp-Ga-bkR">
+                                                    <rect key="frame" x="2" y="90" width="108.5" height="60"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="75" id="VWo-vg-IgV"/>
+                                                        <constraint firstAttribute="height" constant="60" id="VWo-vg-IgV"/>
                                                     </constraints>
-                                                    <attributedString key="attributedText">
-                                                        <fragment content="Title">
-                                                            <attributes>
-                                                                <color key="NSBackgroundColor" red="1" green="0.5409764051" blue="0.84731429820000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                <font key="NSFont" size="15" name=".AppleSystemUIFont"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                            </attributes>
-                                                        </fragment>
-                                                    </attributedString>
+                                                    <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="16"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </view>
                                         <constraints>
+                                            <constraint firstItem="UzX-Zv-LlD" firstAttribute="leading" secondItem="f6T-lm-qYu" secondAttribute="leading" id="0KX-3I-V8K"/>
+                                            <constraint firstAttribute="trailing" secondItem="UzX-Zv-LlD" secondAttribute="trailing" id="1D9-Dz-ehn"/>
                                             <constraint firstItem="l33-vp-AfF" firstAttribute="top" secondItem="f6T-lm-qYu" secondAttribute="top" id="2w2-W7-MXy"/>
                                             <constraint firstAttribute="trailing" secondItem="3pp-Ga-bkR" secondAttribute="trailing" constant="2" id="5iT-Fk-e7v"/>
+                                            <constraint firstItem="UzX-Zv-LlD" firstAttribute="top" secondItem="3pp-Ga-bkR" secondAttribute="top" constant="-10" id="6eO-3k-4nr"/>
                                             <constraint firstAttribute="bottom" secondItem="l33-vp-AfF" secondAttribute="bottom" id="Cjt-Dy-l3K"/>
                                             <constraint firstAttribute="bottom" secondItem="3pp-Ga-bkR" secondAttribute="bottom" id="Z8z-Lf-x85"/>
                                             <constraint firstItem="3pp-Ga-bkR" firstAttribute="leading" secondItem="f6T-lm-qYu" secondAttribute="leading" constant="2" id="dYK-9U-QuR"/>
                                             <constraint firstAttribute="trailing" secondItem="l33-vp-AfF" secondAttribute="trailing" id="ftA-mn-g5L"/>
+                                            <constraint firstAttribute="bottom" secondItem="UzX-Zv-LlD" secondAttribute="bottom" id="hVh-Jl-buw"/>
                                             <constraint firstItem="l33-vp-AfF" firstAttribute="leading" secondItem="f6T-lm-qYu" secondAttribute="leading" id="jMG-2Z-IxR"/>
                                         </constraints>
                                     </collectionViewCell>
@@ -130,19 +130,17 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ma4-es-d2U">
                                 <rect key="frame" x="16" y="20" width="343" height="627"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0bS-2n-W97">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PAg-DH-M8H" userLabel="GradientView" customClass="GradientView" customModule="MovieDB" customModuleProvider="target">
+                                <rect key="frame" x="16" y="39" width="343" height="60"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0bS-2n-W97">
                                 <rect key="frame" x="16" y="39" width="343" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="scW-aZ-rU8"/>
                                 </constraints>
-                                <attributedString key="attributedText">
-                                    <fragment content="Label">
-                                        <attributes>
-                                            <font key="NSFont" size="19" name=".AppleSystemUIFont"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="sGh-Gd-Jzi">
@@ -233,13 +231,17 @@
                             <constraint firstItem="vGp-ze-3oO" firstAttribute="trailing" secondItem="0bS-2n-W97" secondAttribute="trailing" constant="16" id="4Jn-w9-GW0"/>
                             <constraint firstItem="sGh-Gd-Jzi" firstAttribute="leading" secondItem="vGp-ze-3oO" secondAttribute="leading" constant="22" id="A0C-hc-4Ua"/>
                             <constraint firstItem="0bS-2n-W97" firstAttribute="leading" secondItem="vGp-ze-3oO" secondAttribute="leading" constant="16" id="BAH-AD-QmY"/>
+                            <constraint firstItem="PAg-DH-M8H" firstAttribute="top" secondItem="0bS-2n-W97" secondAttribute="top" id="C1L-vn-20z"/>
+                            <constraint firstItem="PAg-DH-M8H" firstAttribute="bottom" secondItem="0bS-2n-W97" secondAttribute="bottom" id="J9a-Mk-Oel"/>
                             <constraint firstItem="2rL-dh-pdr" firstAttribute="top" secondItem="0bS-2n-W97" secondAttribute="bottom" constant="15" id="QFt-o1-gq1"/>
+                            <constraint firstItem="PAg-DH-M8H" firstAttribute="trailing" secondItem="0bS-2n-W97" secondAttribute="trailing" id="RY0-uq-xqt"/>
                             <constraint firstItem="vGp-ze-3oO" firstAttribute="trailing" secondItem="sGh-Gd-Jzi" secondAttribute="trailing" constant="23" id="W04-XH-QIf"/>
                             <constraint firstItem="Ma4-es-d2U" firstAttribute="top" secondItem="vGp-ze-3oO" secondAttribute="top" id="ZPI-WA-Fzd"/>
                             <constraint firstItem="vGp-ze-3oO" firstAttribute="bottom" secondItem="Ma4-es-d2U" secondAttribute="bottom" constant="20" id="dTR-Fu-MrM"/>
                             <constraint firstItem="vGp-ze-3oO" firstAttribute="trailing" secondItem="2rL-dh-pdr" secondAttribute="trailing" constant="35" id="fSd-Aw-Iw1"/>
                             <constraint firstItem="2rL-dh-pdr" firstAttribute="leading" secondItem="vGp-ze-3oO" secondAttribute="leading" constant="34" id="htE-VX-7yw"/>
                             <constraint firstItem="vGp-ze-3oO" firstAttribute="bottom" secondItem="sGh-Gd-Jzi" secondAttribute="bottom" constant="50" id="i7L-pW-KfS"/>
+                            <constraint firstItem="PAg-DH-M8H" firstAttribute="leading" secondItem="0bS-2n-W97" secondAttribute="leading" id="nfC-dR-D8a"/>
                             <constraint firstItem="0bS-2n-W97" firstAttribute="top" secondItem="vGp-ze-3oO" secondAttribute="top" constant="19" id="prc-Rn-2Vb"/>
                             <constraint firstItem="Ma4-es-d2U" firstAttribute="leading" secondItem="vGp-ze-3oO" secondAttribute="leading" constant="16" id="zhp-S0-j7p"/>
                         </constraints>

@@ -9,6 +9,9 @@
 import UIKit
 import SwiftyJSON
 
+private let kMainStoryBoard = "Main"
+private let kMovieDetailsViewController = "MovieDetailsViewController"
+
 
 class NowPlayingCoordinator: NSObject, Coordinator {
 
@@ -42,8 +45,8 @@ class NowPlayingCoordinator: NSObject, Coordinator {
     private var playingMovies: PlayingMoviesResponse?
     private var currentError: Error?
 
-    private let detailsCoordinator: MovieDetailsCoordinator? = nil
-    private let collectionCoordinator: MovieCollectionCoordinator? = nil
+    private var detailsCoordinator: MovieDetailsCoordinator? = nil
+    private var collectionCoordinator: MovieCollectionCoordinator? = nil
 }
 
 
@@ -168,7 +171,6 @@ extension NowPlayingCoordinator: UICollectionViewDataSource {
         if let playingMovies = self.playingMovies {
             
             let playingMovies = playingMovies.movies.count
-            
             return playingMovies
         }
         return 0
@@ -209,26 +211,47 @@ extension NowPlayingCoordinator: UICollectionViewDataSource {
     }
 }
 
+
 // MARK: - Table View Delegate
 
 extension NowPlayingCoordinator: UICollectionViewDelegate {
     
-    /*
-     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-     let indexPath = tableView.indexPathForSelectedRow
-     let currentCell = tableView.cellForRow(at: indexPath!)!
-     print(currentCell.textLabel!.text!)
-     }
-    */
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if let indexPath = collectionView.indexPathsForSelectedItems?.first {
+            
+//            let currentCell = collectionView.cellForItem(at: indexPath)!
+            
+            if let selectedMovie = self.playingMovies?.movies[indexPath.row] {
+
+//                DLogWith(message: "\(selectedMovie.title)")
+                self.showMovieDetailsScreen(for: selectedMovie)
+            }
+        }
+    }
 }
 
 
-private func getDocumentsDirectory() -> URL {
-    let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-    return paths[0]
-}
+// MARK: Detail / Navigation Extension
 
-private func getTemporaryDirectory() -> URL {
+extension NowPlayingCoordinator {
     
-    return NSURL.fileURL(withPath: NSTemporaryDirectory(), isDirectory: true)
+    func showMovieDetailsScreen(for movie: Movie) {
+        
+        let storyboard = UIStoryboard(name: kMainStoryBoard, bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: kMovieDetailsViewController)
+        
+        var movieDetailsCoordinator = MovieDetailsCoordinator(presenter: self, targetViewController: controller)
+        self.detailsCoordinator = movieDetailsCoordinator
+        movieDetailsCoordinator.details = ["targetMovie": movie]
+        
+        if let presenter = self.viewController.parent as? UINavigationController {
+            
+//            presenter.present(controller, animated: true, completion: {
+//                movieDetailsCoordinator.start()
+//            })
+            presenter.pushViewController(controller, animated: true)
+            movieDetailsCoordinator.start()
+        }
+    }
 }

@@ -40,8 +40,8 @@ class MovieDBViewController: UIViewController {
     
     // MARK: Private Properties
     
-    var tableViewDelegate: UICollectionViewDelegate?
-    var tableViewDataSource: UICollectionViewDataSource?
+    var collectionViewDelegate: UICollectionViewDelegate?
+    var collectionDataSource: UICollectionViewDataSource?
 }
 
 
@@ -49,11 +49,11 @@ extension MovieDBViewController: NowPlayingMoviesDisplay {
 
     func displayMovies(from tableDelegate: UICollectionViewDelegate, with tableDataSource: UICollectionViewDataSource) {
 
-        self.tableViewDelegate = tableDelegate
-        self.tableViewDataSource = tableDataSource
+        self.collectionViewDelegate = tableDelegate
+        self.collectionDataSource = tableDataSource
         
-        self.moviesCollectionView.delegate = self.tableViewDelegate
-        self.moviesCollectionView.dataSource = self.tableViewDataSource
+        self.moviesCollectionView.delegate = self.collectionViewDelegate
+        self.moviesCollectionView.dataSource = self.collectionDataSource
 
         self.moviesCollectionView.reloadData()
     }

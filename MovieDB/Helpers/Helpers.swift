@@ -30,3 +30,18 @@ class Helpers {
         return nil
     }
 }
+
+
+
+
+// MARK: - Private Helpers
+
+func getDocumentsDirectory() -> URL {
+    let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+    return paths[0]
+}
+
+func getTemporaryDirectory() -> URL {
+    
+    return NSURL.fileURL(withPath: NSTemporaryDirectory(), isDirectory: true)
+}

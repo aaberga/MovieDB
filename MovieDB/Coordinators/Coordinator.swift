@@ -15,3 +15,10 @@ protocol Coordinator {
     
     func start()
 }
+
+protocol SubCoordinator: Coordinator {
+    
+    var presenter: Coordinator { set get }
+    
+    var details: [String: Any]? { get set }
+}

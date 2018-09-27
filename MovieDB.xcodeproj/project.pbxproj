@@ -27,6 +27,7 @@
 		1B4B09C9215ADDBF008EE7DD /* MovieDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B09C8215ADDBF008EE7DD /* MovieDetailsCoordinator.swift */; };
 		1B4B09CB215ADE95008EE7DD /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B09CA215ADE95008EE7DD /* Movie.swift */; };
 		1B4BDE3F215C13D400BCEB08 /* MovieDB_MoviePoster_API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4BDE3E215C13D400BCEB08 /* MovieDB_MoviePoster_API.swift */; };
+		1B5795F3215D49FF00942A83 /* MovieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5795F2215D49FF00942A83 /* MovieDetailsViewController.swift */; };
 		1B654D9C215A946200216A84 /* MovieDB Paw Document.paw in Resources */ = {isa = PBXBuildFile; fileRef = 1B654D9B215A946200216A84 /* MovieDB Paw Document.paw */; };
 		1B654D9E215AA22C00216A84 /* MovieDB_MoviesCollection_API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B654D9D215AA22C00216A84 /* MovieDB_MoviesCollection_API.swift */; };
 		1B654DA0215AA27C00216A84 /* MovieDB_MoviesNowPlaying_API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B654D9F215AA27C00216A84 /* MovieDB_MoviesNowPlaying_API.swift */; };
@@ -71,6 +72,7 @@
 		1B4B09C8215ADDBF008EE7DD /* MovieDetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsCoordinator.swift; sourceTree = "<group>"; };
 		1B4B09CA215ADE95008EE7DD /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		1B4BDE3E215C13D400BCEB08 /* MovieDB_MoviePoster_API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDB_MoviePoster_API.swift; sourceTree = "<group>"; };
+		1B5795F2215D49FF00942A83 /* MovieDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewController.swift; sourceTree = "<group>"; };
 		1B654D9B215A946200216A84 /* MovieDB Paw Document.paw */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MovieDB Paw Document.paw"; sourceTree = "<group>"; };
 		1B654D9D215AA22C00216A84 /* MovieDB_MoviesCollection_API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDB_MoviesCollection_API.swift; sourceTree = "<group>"; };
 		1B654D9F215AA27C00216A84 /* MovieDB_MoviesNowPlaying_API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDB_MoviesNowPlaying_API.swift; sourceTree = "<group>"; };
@@ -134,8 +136,9 @@
 				1B3C0353215A533200FAD6AB /* Models */,
 				1B3C035A215A533200FAD6AB /* Supporting Files */,
 				1B3C0328215A51B300FAD6AB /* AppDelegate.swift */,
-				1B3C032A215A51B300FAD6AB /* MovieDBViewController.swift */,
 				1B3C032C215A51B300FAD6AB /* Main.storyboard */,
+				1B3C032A215A51B300FAD6AB /* MovieDBViewController.swift */,
+				1B5795F2215D49FF00942A83 /* MovieDetailsViewController.swift */,
 				1B3C032F215A51B600FAD6AB /* Assets.xcassets */,
 				1B3C0331215A51B600FAD6AB /* LaunchScreen.storyboard */,
 				1B3C0334215A51B600FAD6AB /* Info.plist */,
@@ -475,6 +478,7 @@
 				1BA8EC79215B845D004A9D58 /* MovieCollectionCoordinator.swift in Sources */,
 				1B3C0329215A51B300FAD6AB /* AppDelegate.swift in Sources */,
 				1B4B09C9215ADDBF008EE7DD /* MovieDetailsCoordinator.swift in Sources */,
+				1B5795F3215D49FF00942A83 /* MovieDetailsViewController.swift in Sources */,
 				1B4B09BF215AA954008EE7DD /* MovieDBService.swift in Sources */,
 				1B3C0360215A533300FAD6AB /* Coordinator.swift in Sources */,
 				1B4B09C5215AD7D5008EE7DD /* MovieCollection.swift in Sources */,
@@ -643,7 +647,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 84Q4L7LH83;
 				INFOPLIST_FILE = MovieDB/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.ibat.other.moviedbapi.MovieDB;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -659,7 +666,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 84Q4L7LH83;
 				INFOPLIST_FILE = MovieDB/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.ibat.other.moviedbapi.MovieDB;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -676,7 +686,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 84Q4L7LH83;
 				INFOPLIST_FILE = MovieDBTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.ibat.other.moviedbapi.MovieDBTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -694,7 +708,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 84Q4L7LH83;
 				INFOPLIST_FILE = MovieDBTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.ibat.other.moviedbapi.MovieDBTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;

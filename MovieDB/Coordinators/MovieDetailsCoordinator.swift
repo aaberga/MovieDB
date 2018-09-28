@@ -124,14 +124,24 @@ class MovieDetailsCoordinator: SubCoordinator, MovieDetailsDelegate {
                             
                             detailsViewController?.displayMovieDetails(resultString)
                         }
+                        
+                        if let movieCollection = movieDetails["belongs_to_collection"]?.dictionary {
+                            
+                            self.getMovieCollectionData(for: "")
+                        }
                     }
                 }
             })
-
         }
+    }
+    
+    func getMovieCollectionData(for collectionID: String) {
+        
+        DLogWith(message: "Look up collection \(collectionID)")
     }
 
     // MARK: Private Properties
     
     private var movie: Movie? = nil
+    private var relatedMovieCollection: MovieCollection? = nil
 }

@@ -39,7 +39,10 @@ class MovieDetailsViewController: UIViewController {
     @IBOutlet weak var moviePoster: UIImageView!
 
     @IBOutlet weak var movieDetails: UITextView!
+    @IBOutlet weak var collectionView: GradientView!
+    @IBOutlet weak var collectionTitle: UILabel!
     @IBOutlet weak var collectionMovies: UICollectionView!
+    @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
     
     // MARK: ViewController Life Cycle
     
@@ -86,5 +89,4 @@ extension MovieDetailsViewController: MovieDetailsDisplay {
         
         self.collectionMovies.reloadData()
     }
-    
 }

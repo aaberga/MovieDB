@@ -6,7 +6,15 @@ Upon launch the app will fetch the list of movies playing now in cinemas.
 
 Movie posters are asynchronously fetched, saved on disk and reused in the next collection view reload.
 
-More work is planned to explore grabbing movie details, obviously when the user selects a movie (cell). 
+More work is planned to complete grabbing movie details, when the user selects a movie (cell): if a movie is part of a collection, then the 'sub panel' to present movies of the collection, should appear.
+
+To do so, the relevant API call code should be finished and linked to the 'architecture elements' (coordinator and view).
+
+Even if I do generally advocate (and work with) unit tests, I did not need any up to this point, as I was in 'scouting mode'. That means I was progressively adding thought, logic and code, at every build.
+
+Unit tests can capture only part of the process, as it was always starting from the UI (from super rough to OK).
+
+TDD is left as a future element to study, probably at the time when creating an Xcode architectural template out of this (and the additional, related) code exercises.  
 
 _Stay tuned._
 

@@ -14,7 +14,7 @@ Even if I do generally advocate (and work with) unit tests, I did not need any u
 
 Unit tests can capture only part of the process, as it was always starting from the UI (from super rough to OK).
 
-TDD is left as a future element to study, probably at the time when creating an Xcode architectural template out of this (and the additional, related) code exercises.  
+TDD is left as a future element to study, probably at the time when creating an Xcode architectural template out of this (and the additional, related) code exercise(s).  
 
 _Stay tuned._
 

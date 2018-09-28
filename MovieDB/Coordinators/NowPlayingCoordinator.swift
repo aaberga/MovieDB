@@ -241,15 +241,12 @@ extension NowPlayingCoordinator {
         let storyboard = UIStoryboard(name: kMainStoryBoard, bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: kMovieDetailsViewController)
         
-        var movieDetailsCoordinator = MovieDetailsCoordinator(presenter: self, targetViewController: controller)
+        let movieDetailsCoordinator = MovieDetailsCoordinator(presenter: self, targetViewController: controller)
         self.detailsCoordinator = movieDetailsCoordinator
         movieDetailsCoordinator.details = ["targetMovie": movie]
         
         if let presenter = self.viewController.parent as? UINavigationController {
             
-//            presenter.present(controller, animated: true, completion: {
-//                movieDetailsCoordinator.start()
-//            })
             presenter.pushViewController(controller, animated: true)
             movieDetailsCoordinator.start()
         }

@@ -47,6 +47,7 @@ class MovieDetailsViewController: UIViewController {
         
         super.viewWillAppear(animated)
         
+        //self.movieDetails.text = ""
         self.delegate?.getMovieInfo()
     }
     

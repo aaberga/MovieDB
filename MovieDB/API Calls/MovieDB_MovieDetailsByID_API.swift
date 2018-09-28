@@ -65,7 +65,9 @@ class MovieDB_MovieDetailsByID_API {
 //                DLogWith(message: "URL Session Task Succeeded: HTTP \(statusCode)")
                 
                 if let data = data {
+                    
                     if let json = try? JSON(data: data) {
+                        
                         completionBlock(json, error)
                     } else {
                         

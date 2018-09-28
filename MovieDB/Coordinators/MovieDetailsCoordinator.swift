@@ -40,30 +40,16 @@ class MovieDetailsCoordinator: SubCoordinator, MovieDetailsDelegate {
         
         if let details = self.details {
             
-            var movieID = 0
             if let currentMovie = details["targetMovie"] as? Movie {
                 
                 self.movie = currentMovie
-                movieID = Int(currentMovie.id)
             }
             
             if let detailsViewController = self.viewController as? MovieDetailsViewController {
                 detailsViewController.delegate = self
             }
             
-            if let targetViewController = self.viewController as? MovieDetailsViewController {
-                
-                self.dataService.getMovieDetails(forMovie: movieID, andOnCompletion: { [weak targetViewController](result: Any?, error: Error?) in
-                    
-                    DLogWith(message: "Result: \(String(describing: result))")
-                    
-                    if let json = result as? JSON {
-                        
-                        let resultString = json.description
-                        targetViewController?.displayMovieDetails(resultString)
-                    }
-                })
-            }
+            self.getMovieDetails()
         }
     }
 
@@ -83,6 +69,66 @@ class MovieDetailsCoordinator: SubCoordinator, MovieDetailsDelegate {
     }
     
     func getMovieDetails() {
+        
+        if let detailsViewController = self.viewController as? MovieDetailsViewController,
+            let movie = self.movie  {
+            
+            let movieID = Int(movie.id)
+
+            self.dataService.getMovieDetails(forMovie: movieID, andOnCompletion: { [weak detailsViewController](result: Any?, error: Error?) in
+                
+//                DLogWith(message: "Result: \(String(describing: result))")
+                
+                if let json = result as? JSON {
+                    
+                    if let movieDetails = json.dictionary {
+                        
+                        let title = movieDetails["original_title"]?.string
+                        let overview = movieDetails["overview"]?.string
+                        var genresList = ""
+                        if let rawGenres = movieDetails["genres"]?.array {
+                            for currentGenreInfo in rawGenres {
+                                
+                                if let currentGenreInfo = currentGenreInfo.dictionary {
+                                    if let newGenre = currentGenreInfo["name"]?.string {
+                                        if genresList == "" {
+                                            genresList = newGenre
+                                        } else {
+                                            genresList = genresList + ", " + newGenre
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        let relaseDate = movieDetails["release_date"]?.string
+                        let imdbRef = movieDetails["imdb_id"]?.string
+                        let homepage = movieDetails["homepage"]?.string
+                        
+                        if let title = title, let overview = overview, let relaseDate = relaseDate, let imdbRef = imdbRef, let homepage = homepage {
+                            let resultString = """
+                            Original Title:\t\(title)
+                            
+                            Overview:\t\(overview)
+                            
+                            Genres:
+                            \(genresList)
+                            
+                            Release Date:
+                            \(relaseDate)
+                            
+                            IMDB:\t\(imdbRef)
+                            
+                            Homepage:
+                            \(homepage)
+                            """
+                            
+                            detailsViewController?.displayMovieDetails(resultString)
+                        }
+                    }
+                }
+            })
+
+        }
     }
 
     // MARK: Private Properties

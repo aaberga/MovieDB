@@ -185,6 +185,64 @@ class MoviedDBService: DataService {
     func getMoviesInCollection(withID collectionID: Int, andOnCompletion completionBlock: @escaping (_ result: Any?, _ error: Error?) -> Void) {
         
         func transformResponseToModel(_ result: Any?, _ error: Error?) -> Void {
+            
+            var collectionMovies: [Movie]?
+            var apiError: Error?
+            
+            if let collectionRawData = result as? JSON {
+                
+                if let moviesInfoList = collectionRawData["parts"].array {
+                    
+                    var foundCollectionMovies: [Movie] = []
+
+                    for currentMovieData in moviesInfoList {
+                        
+                        let id = currentMovieData["id"].int
+                        let title = currentMovieData["title"].string
+                        let releaseDate = currentMovieData["release_date"].string
+                        
+                        let overview = currentMovieData["overview"].string
+                        let originalTitle = currentMovieData["original_title"].string
+                        let originalLanguage = currentMovieData["original_language"].string
+                        
+                        let posterPath = currentMovieData["poster_path"].string
+                        
+                        if let id = id, let title = title, let releaseDate = releaseDate, let overview = overview, let originalTitle = originalTitle,
+                            let originalLanguage = originalLanguage, let posterPath = posterPath {
+                            
+                            let newMovie = Movie(id: id, title: title, releaseDate: releaseDate, overview: overview, originalTitle: originalTitle, originalLanguage: originalLanguage, posterPath: posterPath)
+                            foundCollectionMovies.append(newMovie)
+                        }
+                    }
+                    collectionMovies = foundCollectionMovies
+                }
+                
+                // MARK: Create Collection object!!!
+                
+                let collectionID = collectionRawData["id"].int
+                let collectionName = collectionRawData["name"].string
+                let collectionOverView = collectionRawData["overview"].string
+                let collectionPosterPath = collectionRawData["poster_path"].string
+                
+                if let collectionID = collectionID, let collectionName = collectionName, let collectionOverView = collectionOverView,
+                    let collectionPosterPath = collectionPosterPath, let collectionMovies = collectionMovies {
+                 
+                    let movieCollection = MovieCollection(id: collectionID, name: collectionName, overview: collectionOverView, posterPath: collectionPosterPath, parts: collectionMovies)
+                    completionBlock(movieCollection, nil)
+                    
+                } else {
+                    
+                    let responseError: NSError? = NSError(domain: kErrorDomain, code: 1001, userInfo: ["ErrorString": "Could not parse JSON to MovieCollection! \(String(describing: result))"])
+                    apiError = responseError
+                    completionBlock(nil, apiError)
+                }
+                
+            } else {
+                
+                let responseError: NSError? = NSError(domain: kErrorDomain, code: 1000, userInfo: ["ErrorString": "Result is not JSON! \(String(describing: result))"])
+                apiError = responseError
+                completionBlock(nil, apiError)
+            }
         }
         
         MovieDB_MoviesCollection_API.sendRequest(withID: collectionID, andOnCompletion: transformResponseToModel)

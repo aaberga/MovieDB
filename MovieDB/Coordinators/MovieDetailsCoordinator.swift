@@ -127,7 +127,13 @@ class MovieDetailsCoordinator: SubCoordinator, MovieDetailsDelegate {
                         
                         if let movieCollection = movieDetails["belongs_to_collection"]?.dictionary {
                             
-                            self.getMovieCollectionData(for: "")
+//                            DLogWith(message: "Collection: \(movieCollection)")
+                            if let belongingCollection = movieCollection["id"] {
+                                
+                                if let collectionID = belongingCollection.int   {
+                                    self.getMovieCollectionData(for: collectionID)
+                                }
+                            }
                         }
                     }
                 }
@@ -135,9 +141,22 @@ class MovieDetailsCoordinator: SubCoordinator, MovieDetailsDelegate {
         }
     }
     
-    func getMovieCollectionData(for collectionID: String) {
+    func getMovieCollectionData(for collectionID: Int) {
         
-        DLogWith(message: "Look up collection \(collectionID)")
+        DLogWith(message: "Look up collection '\(collectionID)'\n")
+        
+        if let detailsViewController = self.viewController as? MovieDetailsViewController {
+            
+            self.dataService.getMoviesInCollection(withID: collectionID, andOnCompletion: { [weak detailsViewController] (result: Any?, error: Error?) in
+                
+                DLogWith(message: "VC: \(String(describing: detailsViewController))")
+                if let result = result as? MovieCollection {
+                    
+                    DLogWith(message: "Collection Movies: \(result)")
+                    
+                }
+            })
+        }
     }
 
     // MARK: Private Properties

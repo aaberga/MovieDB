@@ -18,6 +18,5 @@ struct MovieCollection {
     let overview: String
     
     let posterPath: String
-    
     let parts: [Movie]
 }
